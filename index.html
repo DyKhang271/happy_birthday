@@ -1,0 +1,624 @@
+<head>
+  <meta charset="UTF-8" />
+  <title>Happy Birthday Trúc Hân</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@500&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="icon" href="img/banhsinhnhat.jpeg" />
+</head>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #ffd6ec 0%, #b4f1ff 100%);
+      overflow-x: hidden;
+      position: relative;
+    }
+    .hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .container {
+      min-height: 100vh;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 10;
+      position: relative;
+    }
+    .card {
+      position: relative;
+      max-width: 320px;
+      width: 96vw;
+      padding: 32px 24px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-radius: 32px;
+      box-shadow: 0 8px 32px rgba(246, 180, 219, 0.11);
+      animation: fadein 1s;
+      background-image: none;
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("img/img1.jpeg");
+      background-size: cover;
+      background-position: center 15%;
+      filter: brightness(0.7) blur(4px);
+      border-radius: 32px;
+      z-index: 0;
+    }
+    .card > * {
+      position: relative;
+      z-index: 1;
+    }
+    #lockScreen {
+      background-image: none !important;
+      box-shadow: 0 8px 32px rgba(246, 180, 219, 0.6);
+      backdrop-filter: blur(5px);
+    }
+    #lockScreen::before {
+      display: none !important;
+    }
+    @keyframes fadein {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    .lock-screen {
+      transition: opacity 0.5s;
+    }
+    .locked {
+      filter: blur(0);
+      pointer-events: auto;
+      opacity: 1;
+      z-index: 20;
+    }
+    .hidden {
+      display: none !important;
+    }
+    .input-pass {
+      font-size: 1.6rem;
+      border: none;
+      border-radius: 12px;
+      text-align: center;
+      padding: 8px 0;
+      margin-bottom: 16px;
+      width: 160px;
+      background: #fff;
+      letter-spacing: 8px;
+      outline: none;
+      box-shadow: 0 1px 4px #eee;
+      font-weight: bold;
+    }
+    .number-pad {
+      display: grid;
+      grid-template-columns: repeat(3, 58px);
+      gap: 14px;
+      margin-bottom: 12px;
+      justify-content: center;
+    }
+    .number-btn,
+    .btn-check,
+    .btn-del {
+      background: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.4rem;
+      font-weight: bold;
+      width: 58px;
+      height: 48px;
+      cursor: pointer;
+      box-shadow: 0 1px 4px #e4cbe4;
+      transition: background 0.2s;
+    }
+    .btn-check,
+    .btn-del {
+      background: linear-gradient(135deg, #fd83ad 60%, #e7c1e8 100%);
+      color: #fff;
+      font-size: 1.7rem;
+      box-shadow: 0 2px 10px #f7c6ea66;
+    }
+    .btn-del {
+      background: linear-gradient(135deg, #e7c1e8 60%, #fd83ad 100%);
+    }
+    .action-row {
+      display: flex;
+      width: 100%;
+      gap: 18px;
+      justify-content: center;
+      margin-top: 8px;
+    }
+    .avatar {
+      margin: 16px 0;
+      width: 100px;
+      height: 100px;
+      border-radius: 22px;
+      object-fit: cover;
+      box-shadow: 0 6px 12px #ffd4ec66;
+      background: #f6e3f7;
+    }
+    .greeting {
+      font-family: 'Pacifico', cursive;
+      color: #fd6eae;
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+    .love-note {
+      font-size: 1.02rem;
+      color: #888;
+      margin-bottom: 8px;
+      text-align: center;
+      font-style: italic;
+      min-height: 50px;
+      white-space: pre-wrap;
+      font-family: 'Pacifico', cursive;
+      color: #fd83ad;
+      width: 100%;
+    }
+    .signed-by-inline {
+      margin-top: 8px;
+      font-size: 1rem;
+      font-style: italic;
+      color: #a28eae;
+      font-family: 'Pacifico', cursive;
+      text-align: right;
+      width: 100%;
+      user-select: none;
+    }
+    .letter-inside {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -55%);
+      width: 95vw;
+      max-width: 320px;
+      z-index: 999;
+      animation: popin 0.6s;
+      text-align: center;
+      min-height: 260px;
+      font-family: 'Pacifico', cursive;
+      color: #fd83ad;
+      font-size: 1.1rem;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 6px 24px #e6b3b766;
+      padding: 18px 12px 60px 12px;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    @keyframes popin {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -30px);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, -55%);
+      }
+    }
+    .img-in-letter {
+      width: 100px;
+      height: 100px;
+      border-radius: 12px;
+      object-fit: cover;
+      display: block;
+      margin: 0 auto 12px auto;
+      background: #f3d5f3;
+
+      /* Chỉ fade-in, không fade-out */
+      opacity: 1;
+      transition: opacity 0.4s ease-in;
+    }
+    .close-letter {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fd83ad;
+      color: #fff;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 24px;
+      cursor: pointer;
+      box-shadow: 0 1px 4px #ffcdf666;
+    }
+    .bottom-quote {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 14px;
+      width: 100%;
+      text-align: center;
+      font-size: 1.01rem;
+      color: #a28eae;
+      font-style: italic;
+      letter-spacing: 0.1px;
+      z-index: 9;
+    }
+    .spotify-iframe {
+      position: fixed;
+      left: 30px;
+      bottom: 24px;
+      z-index: 9999;
+      min-width: 240px;
+      max-width: 350px;
+      width: 88vw;
+      height: 72px;
+      border-radius: 16px;
+      border: none;
+      box-shadow: 0 4px 16px #eec5ee4a;
+      display: none;
+    }
+    @media (max-width: 550px) {
+      .spotify-iframe {
+        left: 5vw;
+        bottom: 12px;
+      }
+    }
+    button#openLetterBtn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 5px 10px 5px 7px;
+      box-shadow: rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+      background-color: #e8e8e8;
+      border-color: #ffe2e252;
+      border-style: solid;
+      border-width: 9px;
+      border-radius: 35px;
+      font-size: 25px;
+      cursor: pointer;
+      font-weight: 900;
+      color: rgb(134, 124, 124);
+      font-family: monospace;
+      transition:
+        transform 400ms cubic-bezier(0.68, -0.55, 0.27, 2.5),
+        border-color 400ms ease-in-out,
+        background-color 400ms ease-in-out;
+      word-spacing: -2px;
+      position: relative;
+      overflow: visible;
+    }
+    button#openLetterBtn svg {
+      margin-right: 11px;
+      fill: rgb(255, 110, 110);
+      transition: opacity 100ms ease-in-out;
+    }
+    button#openLetterBtn .filled {
+      position: absolute;
+      opacity: 0;
+      top: 5px;
+      left: 7px;
+      pointer-events: none;
+      user-select: none;
+    }
+    button#openLetterBtn.pressed .empty {
+      opacity: 0 !important;
+      transition: opacity 0.3s ease-in-out;
+    }
+    button#openLetterBtn.pressed .filled {
+      opacity: 1 !important;
+      animation: beatingHeart 1.2s infinite;
+      transition: opacity 0.3s ease-in-out;
+    }
+    @keyframes movingBorders {
+      0% {
+        border-color: #fce4e4;
+      }
+      50% {
+        border-color: #ffd8d8;
+      }
+      90% {
+        border-color: #fce4e4;
+      }
+    }
+    button#openLetterBtn:hover {
+      background-color: #eee;
+      transform: scale(105%);
+      animation: movingBorders 3s infinite;
+    }
+    @keyframes beatingHeart {
+      0% { transform: scale(1); }
+      15% { transform: scale(1.15); }
+      30% { transform: scale(1); }
+      45% { transform: scale(1.15); }
+      60% { transform: scale(1); }
+    }
+    button#openLetterBtn:hover .empty {
+      opacity: 0;
+    }
+    button#openLetterBtn:hover .filled {
+      opacity: 1;
+      animation: beatingHeart 1.2s infinite;
+    }
+  </style>
+</head>
+<body>
+  <canvas class="hearts"></canvas>
+  <div class="container">
+    <div class="card lock-screen locked" id="lockScreen">
+      <img src="img/img6.jpeg" alt="avatar" class="avatar" id="avatarImg" />
+      <div style="font-size:1.13rem; margin-bottom: 12px; color: #fd83ad; font-weight:bold;">
+        NHẬP PASS ĐI NGƯỜI ĐẸP
+      </div>
+      <input class="input-pass" id="inputPass" type="password" maxlength="8" readonly />
+      <div class="number-pad" id="numberPad"></div>
+      <div class="action-row">
+        <button class="btn-del" onclick="delPass()">✕</button>
+        <button class="btn-check" onclick="checkPass()">✔</button>
+      </div>
+      <div id="passError" style="color:#ff5c77; font-size:1rem; min-height:20px; margin-top:4px; margin-bottom: 5px; padding-bottom: 20px;"></div>
+      <div class="bottom-quote" style="margin-top: 5px;">"Có những điều không nói ra <br> nhưng ánh mắt đã trả lời"</div>
+    </div>
+
+    <div class="card hidden" id="mainScreen">
+      <div class="greeting">
+        Happy Birthday Yêu<span style="font-size:1.3em"></span>
+      </div>
+      <img
+        src="img/banhsinhnhat.jpeg"
+        class="avatar"
+        style="width:250px; height:250px; margin:15px auto 0 auto; background: transparent; object-fit: contain; border-radius: 16px; display: block;"
+      />
+      <div class="love-note" id="loveNote"></div>
+      <button id="openLetterBtn" type="button" style="position: relative;">
+        <svg
+          class="empty"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="32"
+          height="32"
+        >
+          <path fill="none" d="M0 0H24V24H0z"></path>
+          <path
+            d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2zm-3.566 15.604c.881-.556 1.676-1.109 2.42-1.701C18.335 14.533 20 11.943 20 9c0-2.36-1.537-4-3.5-4-1.076 0-2.24.57-3.086 1.414L12 7.828l-1.414-1.414C9.74 5.57 8.576 5 7.5 5 5.56 5 4 6.656 4 9c0 2.944 1.666 5.533 4.645 7.903.745.592 1.54 1.145 2.421 1.7.299.189.595.37.934.572.339-.202.635-.383.934-.571z"
+          ></path>
+        </svg>
+        <svg
+          class="filled"
+          height="32"
+          width="32"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M0 0H24V24H0z" fill="none"></path>
+          <path
+            d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2z"
+          ></path>
+        </svg>
+        Mở thư nè
+      </button>
+      <div class="signed-by-inline" style="color: #e4cbe4;" id="signedByInline">
+          <a href="https://www.facebook.com/TDyK.271" target="_blank" style="color: #e4cbe4; text-decoration: none;">
+            Duy Khang
+          </a>
+      </div>
+
+    </div>
+
+    <div class="letter-inside" id="letterInside">
+      <img src="img/img2.jpeg" class="img-in-letter" alt="Ảnh kỷ niệm" id="slideshowImage" />
+      <div class="letter-text" id="letterText"></div>
+      <button class="close-letter" onclick="closeLetter(event)">Đóng thư</button>
+    </div>
+
+    <audio id="bgMusic" src="audio/tungngayyeuem.mp3" type="audio/mp3" loop></audio>
+  </div>
+
+  <script>
+    const CORRECT_PASS = "15072005"; // Mật khẩu đúng
+
+    // Tạo bàn phím số
+    const padNums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+    const numberPad = document.getElementById("numberPad");
+    for (let i = 1; i <= 9; i++) {
+      const btn = document.createElement("button");
+      btn.className = "number-btn";
+      btn.textContent = i;
+      btn.onclick = () => inputNum(i);
+      numberPad.appendChild(btn);
+    }
+    let btn0 = document.createElement("button");
+    btn0.className = "number-btn";
+    btn0.textContent = "0";
+    btn0.onclick = () => inputNum(0);
+    numberPad.appendChild(document.createElement("span"));
+    numberPad.appendChild(btn0);
+    numberPad.appendChild(document.createElement("span"));
+
+    let passVal = "";
+    function inputNum(n) {
+      if (passVal.length < 8) {
+        passVal += n;
+        document.getElementById("inputPass").value = passVal;
+        document.getElementById("passError").textContent = "";
+      }
+    }
+    function delPass() {
+      passVal = "";
+      document.getElementById("inputPass").value = "";
+      document.getElementById("passError").textContent = "";
+    }
+    function checkPass() {
+      if (passVal === CORRECT_PASS) {
+        document.getElementById("lockScreen").classList.add("hidden");
+        document.getElementById("mainScreen").classList.remove("hidden");
+        delPass();
+
+        const bgMusic = document.getElementById("bgMusic");
+        bgMusic.load();
+        bgMusic.play();
+
+        // Không mở thư tự động nữa
+      } else {
+        document.getElementById("passError").textContent = "Sai mật khẩu rồi! 🥺";
+        setTimeout(delPass, 800);
+      }
+    }
+
+    const slideshowImages = [
+      "img/img2.jpeg",
+      "img/img3.jpeg",
+      "img/img4.jpeg",
+      "img/img5.jpeg",
+    ];
+    let currentSlideIndex = 0;
+    let slideInterval;
+
+    // Hiệu ứng chỉ fade-in, nhanh 0.4s
+    function changeSlide() {
+      const imgEl = document.getElementById("slideshowImage");
+      currentSlideIndex = (currentSlideIndex + 1) % slideshowImages.length;
+      imgEl.style.opacity = 0;
+      setTimeout(() => {
+        imgEl.src = slideshowImages[currentSlideIndex];
+        imgEl.style.opacity = 1;
+      }, 50); // 50ms delay trước khi fade-in
+    }
+
+    function startSlideshow() {
+      currentSlideIndex = 0;
+      const imgEl = document.getElementById("slideshowImage");
+      imgEl.src = slideshowImages[currentSlideIndex];
+      imgEl.style.opacity = 1;
+      slideInterval = setInterval(changeSlide, 3000);
+    }
+
+    function stopSlideshow() {
+      clearInterval(slideInterval);
+    }
+
+    let isLetterOpen = false;
+
+    document
+      .getElementById("openLetterBtn")
+      .addEventListener("click", function () {
+        if (!isLetterOpen) {
+          document.getElementById("letterInside").style.display = "block";
+          isLetterOpen = true;
+          startSlideshow();
+          const letterContent = `\t Chúc mừng sinh nhật 'ai đó' rất đặc biệt! 🎂 
+Nghe bảo thêm một tuổi là thêm 'gần' với anh hơn một chút đó 🥳. 
+Cảm ơn vì đã xuất hiện và thắp sáng những ngày... hơi 'tối' của anh (ý là trước khi gặp em đó nha!). 
+Chúc 'người ta' tuổi mới ăn no chóng lớn, à nhầm, luôn xinh đẹp, tươi tắn và gặp nhiều điều 'bất ngờ' thú vị... giống như sự xuất hiện của em vậy đó! 😉
+
+
+\n Yêu 'người ta' nhiều lắm! ❤️`;
+          typeWriter(letterContent, "letterText", 60);
+          this.classList.add("pressed");
+        }
+      });
+
+    function closeLetter(e) {
+      e.stopPropagation();
+      document.getElementById("letterInside").style.display = "none";
+      isLetterOpen = false;
+      stopSlideshow();
+      document.getElementById("openLetterBtn").classList.remove("pressed");
+    }
+
+    function typeWriter(text, elementId, speed = 60) {
+      let i = 0;
+      const el = document.getElementById(elementId);
+      el.innerHTML = "";
+      function typing() {
+        if (i < text.length) {
+          let char = text[i];
+          if (char === "\n") {
+            el.innerHTML += "<br>";
+          } else if (char === "\t") {
+            // Thêm indent (4 dấu cách) khi gặp tab
+            el.innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;";
+          } else {
+            el.textContent += char;
+          }
+          i++;
+          setTimeout(typing, speed);
+        }
+      }
+      typing();
+    }
+
+    const hearts = [];
+    const heartCanvas = document.querySelector(".hearts");
+    const ctx = heartCanvas.getContext("2d");
+    function resizeCanvas() {
+      heartCanvas.width = window.innerWidth;
+      heartCanvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    function randomHeart() {
+      return {
+        x: Math.random() * heartCanvas.width,
+        y: Math.random() * heartCanvas.height,
+        size: 20 + Math.random() * 16,
+        speed: 0.6 + Math.random() * 1.2,
+        alpha: 0.7 + Math.random() * 0.2,
+        dx: (Math.random() - 0.5) * 0.5,
+      };
+    }
+    for (let i = 0; i < 30; i++) hearts.push(randomHeart());
+    let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+
+    document.addEventListener("mousemove", (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+
+    function drawHeart(x, y, size, alpha) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.translate(x, y);
+      ctx.beginPath();
+      ctx.moveTo(0, size / 4);
+      ctx.bezierCurveTo(size / 2, -size / 2, size, size / 3, 0, size);
+      ctx.bezierCurveTo(-size, size / 3, -size / 2, -size / 2, 0, size / 4);
+      ctx.closePath();
+      ctx.fillStyle = "#fd83ad";
+      ctx.shadowColor = "#fff";
+      ctx.shadowBlur = 8;
+      ctx.fill();
+      ctx.restore();
+    }
+    function animateHearts() {
+      ctx.clearRect(0, 0, heartCanvas.width, heartCanvas.height);
+      for (let h of hearts) {
+        drawHeart(h.x, h.y, h.size, h.alpha);
+        h.y -= h.speed;
+        h.x += (mouse.x - h.x) * 0.003 + h.dx;
+        if (h.y < -50) {
+          let nh = randomHeart();
+          nh.y = heartCanvas.height + 40;
+          h.x = nh.x;
+          h.y = nh.y;
+          h.size = nh.size;
+          h.speed = nh.speed;
+          h.alpha = nh.alpha;
+          h.dx = nh.dx;
+        }
+      }
+      requestAnimationFrame(animateHearts);
+    }
+    animateHearts();
+  </script>
+</body>
+</html>
