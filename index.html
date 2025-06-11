@@ -1,14 +1,11 @@
+<!DOCTYPE html>
+<html>
 <head>
   <meta charset="UTF-8" />
   <title>Happy Birthday Trúc Hân</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@500&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@500&display=swap" rel="stylesheet" />
   <link rel="icon" href="img/banhsinhnhat.jpeg" />
-</head>
-
   <style>
     body {
       margin: 0;
@@ -89,19 +86,65 @@
     .hidden {
       display: none !important;
     }
+    .password-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+    }
     .input-pass {
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       border: none;
       border-radius: 12px;
       text-align: center;
-      padding: 8px 0;
-      margin-bottom: 16px;
-      width: 160px;
+      padding: 8px 40px 8px 8px;
+      width: 130px;
+      min-width: 130px;
       background: #fff;
       letter-spacing: 8px;
       outline: none;
       box-shadow: 0 1px 4px #eee;
       font-weight: bold;
+      color: #333;
+      transition: 
+        color 0.3s, 
+        font-size 0.3s, 
+        letter-spacing 0.3s,
+        width 0.3s ease;
+    }
+    .input-pass.text-visible {
+      font-size: 1.5rem;
+      color: #262224;
+      letter-spacing: 2px;
+      text-shadow: 0 1px 2px rgba(255,255,255,0.5);
+    }
+    .eye-toggle {
+      position: absolute;
+      right: 12px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      transition: background-color 0.2s, opacity 0.3s;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .eye-toggle.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .eye-toggle:hover {
+      background-color: rgba(229, 165, 196, 0.1);
+    }
+    .eye-icon {
+      width: 22px;
+      height: 22px;
+      fill: #e5a5c4;
+      transition: all 0.2s;
     }
     .number-pad {
       display: grid;
@@ -220,24 +263,41 @@
       display: block;
       margin: 0 auto 12px auto;
       background: #f3d5f3;
-
-      /* Chỉ fade-in, không fade-out */
       opacity: 1;
       transition: opacity 0.4s ease-in;
     }
-    .close-letter {
+    .close-letter-container {
       position: absolute;
       bottom: 12px;
       left: 50%;
       transform: translateX(-50%);
-      background: #fd83ad;
-      color: #fff;
-      font-size: 1.1rem;
+      width: auto;
+      margin: 0;
+      display: block;
+    }
+    .close-letter {
+      min-width: 85px;
+      font-size: 1em;
+      padding: 0.45em 1.15em;
+      border-radius: 12px;
       border: none;
-      border-radius: 8px;
-      padding: 6px 24px;
+      background: linear-gradient(95deg, #fd83ad 55%, #e7c1e8 100%);
+      color: #fff;
       cursor: pointer;
-      box-shadow: 0 1px 4px #ffcdf666;
+      box-shadow: 0 2px 8px #f7c6ea90;
+      position: relative;
+      z-index: 1;
+      transition: background 0.2s, box-shadow 0.25s, transform 0.13s;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: bold;
+      outline: none;
+      margin: 0 auto;
+      letter-spacing: 0.5px;
+      text-shadow: 0 1px 2px #e78fd822;
+      display: none;
+    }
+    .close-letter.show {
+      display: inline-block !important;
     }
     .bottom-quote {
       position: absolute;
@@ -319,15 +379,9 @@
       transition: opacity 0.3s ease-in-out;
     }
     @keyframes movingBorders {
-      0% {
-        border-color: #fce4e4;
-      }
-      50% {
-        border-color: #ffd8d8;
-      }
-      90% {
-        border-color: #fce4e4;
-      }
+      0% {border-color: #fce4e4;}
+      50% {border-color: #ffd8d8;}
+      90% {border-color: #fce4e4;}
     }
     button#openLetterBtn:hover {
       background-color: #eee;
@@ -358,7 +412,17 @@
       <div style="font-size:1.13rem; margin-bottom: 12px; color: #fd83ad; font-weight:bold;">
         NHẬP PASS ĐI NGƯỜI ĐẸP
       </div>
-      <input class="input-pass" id="inputPass" type="password" maxlength="8" readonly />
+      <div class="password-container">
+        <input class="input-pass" id="inputPass" type="password" maxlength="8" readonly />
+        <button class="eye-toggle" id="eyeToggle" onclick="togglePasswordVisibility()">
+          <svg class="eye-icon" id="eyeOpen" viewBox="0 0 24 24" style="display: none;">
+            <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+          </svg>
+          <svg class="eye-icon" id="eyeClosed" viewBox="0 0 24 24">
+            <path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/>
+          </svg>
+        </button>
+      </div>
       <div class="number-pad" id="numberPad"></div>
       <div class="action-row">
         <button class="btn-del" onclick="delPass()">✕</button>
@@ -379,53 +443,37 @@
       />
       <div class="love-note" id="loveNote"></div>
       <button id="openLetterBtn" type="button" style="position: relative;">
-        <svg
-          class="empty"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          width="32"
-          height="32"
-        >
+        <svg class="empty" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32">
           <path fill="none" d="M0 0H24V24H0z"></path>
-          <path
-            d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2zm-3.566 15.604c.881-.556 1.676-1.109 2.42-1.701C18.335 14.533 20 11.943 20 9c0-2.36-1.537-4-3.5-4-1.076 0-2.24.57-3.086 1.414L12 7.828l-1.414-1.414C9.74 5.57 8.576 5 7.5 5 5.56 5 4 6.656 4 9c0 2.944 1.666 5.533 4.645 7.903.745.592 1.54 1.145 2.421 1.7.299.189.595.37.934.572.339-.202.635-.383.934-.571z"
-          ></path>
+          <path d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2zm-3.566 15.604c.881-.556 1.676-1.109 2.42-1.701C18.335 14.533 20 11.943 20 9c0-2.36-1.537-4-3.5-4-1.076 0-2.24.57-3.086 1.414L12 7.828l-1.414-1.414C9.74 5.57 8.576 5 7.5 5 5.56 5 4 6.656 4 9c0 2.944 1.666 5.533 4.645 7.903.745.592 1.54 1.145 2.421 1.7.299.189.595.37.934.572.339-.202.635-.383.934-.571z"></path>
         </svg>
-        <svg
-          class="filled"
-          height="32"
-          width="32"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+        <svg class="filled" height="32" width="32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 0H24V24H0z" fill="none"></path>
-          <path
-            d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2z"
-          ></path>
+          <path d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2z"></path>
         </svg>
         Mở thư nè
       </button>
       <div class="signed-by-inline" style="color: #e4cbe4;" id="signedByInline">
-          <a href="https://www.facebook.com/TDyK.271" target="_blank" style="color: #e4cbe4; text-decoration: none;">
-            Duy Khang
-          </a>
+        <a href="https://www.facebook.com/TDyK.271" target="_blank" style="color: #e4cbe4; text-decoration: none;">
+          Duy Khang
+        </a>
       </div>
-
     </div>
 
     <div class="letter-inside" id="letterInside">
       <img src="img/img2.jpeg" class="img-in-letter" alt="Ảnh kỷ niệm" id="slideshowImage" />
       <div class="letter-text" id="letterText"></div>
-      <button class="close-letter" onclick="closeLetter(event)">Đóng thư</button>
+      <div class="close-letter-container">
+        <button class="close-letter" id="closeLetterBtn" onclick="closeLetter(event)">Đóng thư</button>
+      </div>
     </div>
 
     <audio id="bgMusic" src="audio/tungngayyeuem.mp3" type="audio/mp3" loop></audio>
   </div>
 
   <script>
-    const CORRECT_PASS = "15072005"; // Mật khẩu đúng
-
-    // Tạo bàn phím số
+    const CORRECT_PASS = "15072005";
+    let isPasswordVisible = false;
     const padNums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
     const numberPad = document.getElementById("numberPad");
     for (let i = 1; i <= 9; i++) {
@@ -444,35 +492,64 @@
     numberPad.appendChild(document.createElement("span"));
 
     let passVal = "";
+    function togglePasswordVisibility() {
+      const inputPass = document.getElementById("inputPass");
+      const eyeOpen = document.getElementById("eyeOpen");
+      const eyeClosed = document.getElementById("eyeClosed");
+      isPasswordVisible = !isPasswordVisible;
+      if (isPasswordVisible) {
+        inputPass.type = "text";
+        inputPass.classList.add("text-visible");
+        eyeOpen.style.display = "block";
+        eyeClosed.style.display = "none";
+      } else {
+        inputPass.type = "password";
+        inputPass.classList.remove("text-visible");
+        eyeOpen.style.display = "none";
+        eyeClosed.style.display = "block";
+      }
+    }
+    function toggleEyeVisibility() {
+      const eyeToggle = document.getElementById("eyeToggle");
+      if (passVal.length > 0) {
+        eyeToggle.classList.add("visible");
+      } else {
+        eyeToggle.classList.remove("visible");
+        if (isPasswordVisible) {
+          togglePasswordVisibility();
+        }
+      }
+    }
     function inputNum(n) {
       if (passVal.length < 8) {
         passVal += n;
         document.getElementById("inputPass").value = passVal;
         document.getElementById("passError").textContent = "";
+        toggleEyeVisibility();
       }
     }
     function delPass() {
       passVal = "";
       document.getElementById("inputPass").value = "";
       document.getElementById("passError").textContent = "";
+      if (isPasswordVisible) {
+        togglePasswordVisibility();
+      }
+      toggleEyeVisibility();
     }
     function checkPass() {
       if (passVal === CORRECT_PASS) {
         document.getElementById("lockScreen").classList.add("hidden");
         document.getElementById("mainScreen").classList.remove("hidden");
         delPass();
-
         const bgMusic = document.getElementById("bgMusic");
         bgMusic.load();
         bgMusic.play();
-
-        // Không mở thư tự động nữa
       } else {
         document.getElementById("passError").textContent = "Sai mật khẩu rồi! 🥺";
         setTimeout(delPass, 800);
       }
     }
-
     const slideshowImages = [
       "img/img2.jpeg",
       "img/img3.jpeg",
@@ -481,8 +558,6 @@
     ];
     let currentSlideIndex = 0;
     let slideInterval;
-
-    // Hiệu ứng chỉ fade-in, nhanh 0.4s
     function changeSlide() {
       const imgEl = document.getElementById("slideshowImage");
       currentSlideIndex = (currentSlideIndex + 1) % slideshowImages.length;
@@ -490,9 +565,8 @@
       setTimeout(() => {
         imgEl.src = slideshowImages[currentSlideIndex];
         imgEl.style.opacity = 1;
-      }, 50); // 50ms delay trước khi fade-in
+      }, 50);
     }
-
     function startSlideshow() {
       currentSlideIndex = 0;
       const imgEl = document.getElementById("slideshowImage");
@@ -500,13 +574,13 @@
       imgEl.style.opacity = 1;
       slideInterval = setInterval(changeSlide, 3000);
     }
-
     function stopSlideshow() {
       clearInterval(slideInterval);
     }
 
+    // ====== CHỈNH HIỆU ỨNG NÚT ĐÓNG THƯ ======
+    // Ẩn nút khi mở thư, hiện lên khi typewriter xong
     let isLetterOpen = false;
-
     document
       .getElementById("openLetterBtn")
       .addEventListener("click", function () {
@@ -514,27 +588,31 @@
           document.getElementById("letterInside").style.display = "block";
           isLetterOpen = true;
           startSlideshow();
+          // Ẩn nút đóng thư
+          document.getElementById('closeLetterBtn').classList.remove('show');
           const letterContent = `\t Chúc mừng sinh nhật 'ai đó' rất đặc biệt! 🎂 
 Nghe bảo thêm một tuổi là thêm 'gần' với anh hơn một chút đó 🥳. 
 Cảm ơn vì đã xuất hiện và thắp sáng những ngày... hơi 'tối' của anh (ý là trước khi gặp em đó nha!). 
 Chúc 'người ta' tuổi mới ăn no chóng lớn, à nhầm, luôn xinh đẹp, tươi tắn và gặp nhiều điều 'bất ngờ' thú vị... giống như sự xuất hiện của em vậy đó! 😉
 
-
 \n Yêu 'người ta' nhiều lắm! ❤️`;
-          typeWriter(letterContent, "letterText", 60);
+          typeWriter(letterContent, "letterText", 60, function() {
+            document.getElementById('closeLetterBtn').classList.add('show');
+          });
           this.classList.add("pressed");
         }
       });
-
     function closeLetter(e) {
       e.stopPropagation();
       document.getElementById("letterInside").style.display = "none";
       isLetterOpen = false;
       stopSlideshow();
       document.getElementById("openLetterBtn").classList.remove("pressed");
+      // Ẩn lại nút đóng thư khi đóng
+      document.getElementById('closeLetterBtn').classList.remove('show');
     }
-
-    function typeWriter(text, elementId, speed = 60) {
+    // ==== Sửa typeWriter để nhận callback onDone ====
+    function typeWriter(text, elementId, speed = 60, onDone) {
       let i = 0;
       const el = document.getElementById(elementId);
       el.innerHTML = "";
@@ -544,18 +622,21 @@ Chúc 'người ta' tuổi mới ăn no chóng lớn, à nhầm, luôn xinh đ�
           if (char === "\n") {
             el.innerHTML += "<br>";
           } else if (char === "\t") {
-            // Thêm indent (4 dấu cách) khi gặp tab
             el.innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;";
           } else {
             el.textContent += char;
           }
           i++;
           setTimeout(typing, speed);
+        } else if (typeof onDone === "function") {
+          onDone();
         }
       }
       typing();
     }
+    // ====== HẾT PHẦN CHỈNH NÚT ĐÓNG THƯ ======
 
+    // ========== GIỮ NGUYÊN CODE HOẠT ẢNH TRÁI TIM ==========
     const hearts = [];
     const heartCanvas = document.querySelector(".hearts");
     const ctx = heartCanvas.getContext("2d");
@@ -565,7 +646,6 @@ Chúc 'người ta' tuổi mới ăn no chóng lớn, à nhầm, luôn xinh đ�
     }
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
-
     function randomHeart() {
       return {
         x: Math.random() * heartCanvas.width,
@@ -578,12 +658,10 @@ Chúc 'người ta' tuổi mới ăn no chóng lớn, à nhầm, luôn xinh đ�
     }
     for (let i = 0; i < 30; i++) hearts.push(randomHeart());
     let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-
     document.addEventListener("mousemove", (e) => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
     });
-
     function drawHeart(x, y, size, alpha) {
       ctx.save();
       ctx.globalAlpha = alpha;
@@ -603,7 +681,7 @@ Chúc 'người ta' tuổi mới ăn no chóng lớn, à nhầm, luôn xinh đ�
       ctx.clearRect(0, 0, heartCanvas.width, heartCanvas.height);
       for (let h of hearts) {
         drawHeart(h.x, h.y, h.size, h.alpha);
-        h.y -= h.speed;
+        h.y -= h.speed ;
         h.x += (mouse.x - h.x) * 0.003 + h.dx;
         if (h.y < -50) {
           let nh = randomHeart();
