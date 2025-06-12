@@ -184,14 +184,25 @@
       justify-content: center;
       margin-top: 8px;
     }
-    .avatar {
+    /* AVATAR EFFECT */
+    .custom-avatar {
       margin: 16px 0;
-      width: 100px;
-      height: 100px;
-      border-radius: 22px;
+      width: 110px;
+      height: 110px;
+      border-radius: 24px;
       object-fit: cover;
-      box-shadow: 0 6px 12px #ffd4ec66;
+      box-shadow: 
+        0 8px 16px rgba(253, 131, 173, 0.2),
+        0 4px 8px rgba(253, 131, 173, 0.1);
       background: #f6e3f7;
+      border: 3px solid rgba(255, 255, 255, 0.6);
+      transition: all 0.3s ease;
+    }
+    .custom-avatar:hover {
+      transform: scale(1.05) rotate(2deg);
+      box-shadow: 
+        0 12px 24px rgba(253, 131, 173, 0.3),
+        0 6px 12px rgba(253, 131, 173, 0.2);
     }
     .greeting {
       font-family: 'Pacifico', cursive;
@@ -402,15 +413,75 @@
       opacity: 1;
       animation: beatingHeart 1.2s infinite;
     }
+    .cute-photo-frame {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 18px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ffe3f8 60%, #e0f7fa 100%);
+  border-radius: 26px;
+  box-shadow: 0 4px 16px #fda3c722, 0 1.5px 8px #b2ebf26e;
+  border: 3px dashed #fd83adbb;
+  overflow: visible;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+.cute-photo-frame:hover {
+  transform: scale(1.05) rotate(-2deg);
+  box-shadow: 0 10px 28px #fda3c749, 0 3px 12px #b2ebf2aa;
+}
+
+.img-in-letter-cute {
+  width: 98px;
+  height: 98px;
+  object-fit: cover;
+  border-radius: 20px;
+  border: 2.5px solid #fff9;
+  box-shadow: 0 1.5px 8px #fda3c744;
+  position: relative;
+  z-index: 2;
+  background: #fdf6fb;
+}
+
+/* Sticker vị trí và hiệu ứng */
+.sticker {
+  position: absolute;
+  width: 26px; height: 26px;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.88;
+  filter: drop-shadow(0 1px 3px #fff8);
+  transition: transform 0.22s;
+}
+.sticker-heart {
+  top: -12px; left: -12px;
+  transform: rotate(-16deg);
+}
+.sticker-star {
+  bottom: -13px; right: -10px;
+  transform: rotate(15deg) scale(1.05);
+}
+.sticker-bow {
+  top: -12px; right: -7px;
+  transform: rotate(7deg) scale(0.9);
+}
+.cute-photo-frame:hover .sticker {
+  transform: scale(1.1) translateY(-3px);
+  opacity: 1;
+}
+
   </style>
 </head>
 <body>
   <canvas class="hearts"></canvas>
   <div class="container">
     <div class="card lock-screen locked" id="lockScreen">
-      <img src="img/img6.jpeg" alt="avatar" class="avatar" id="avatarImg" />
+      <!-- AVATAR with effect -->
+      <img src="img/img6.jpeg" alt="avatar" class="custom-avatar" id="avatarImg" />
       <div style="font-size:1.13rem; margin-bottom: 12px; color: #fd83ad; font-weight:bold;">
-        NHẬP PASS ĐI NGƯỜI ĐẸP
+        ✨ NHẬP PASS ĐI NGƯỜI ĐẸP ✨
       </div>
       <div class="password-container">
         <input class="input-pass" id="inputPass" type="password" maxlength="8" readonly />
@@ -434,8 +505,9 @@
 
     <div class="card hidden" id="mainScreen">
       <div class="greeting">
-        Happy Birthday Yêu<span style="font-size:1.3em"></span>
+        Happy Birthday Yêu🎉<span style="font-size:1.3em"></span>
       </div>
+      <!-- ẢNH BÁNH SINH NHẬT GIỮ NGUYÊN KHÔNG HIỆU ỨNG AVATAR -->
       <img
         src="img/banhsinhnhat.jpeg"
         class="avatar"
@@ -461,7 +533,14 @@
     </div>
 
     <div class="letter-inside" id="letterInside">
-      <img src="img/img2.jpeg" class="img-in-letter" alt="Ảnh kỷ niệm" id="slideshowImage" />
+      <div class="cute-photo-frame">
+        <img src="img/img2.jpeg" alt="Kỷ niệm" class="img-in-letter-cute" id="slideshowImage" />
+        <!-- Sticker trang trí, có thể thêm hoặc bớt -->
+        <img src="img/tim.png" class="sticker sticker-heart" alt="Heart sticker" />
+        <img src="img/sao.png" class="sticker sticker-star" alt="Star sticker" />
+        <img src="img/no.png" class="sticker sticker-bow" alt="Bow sticker" />
+      </div>
+
       <div class="letter-text" id="letterText"></div>
       <div class="close-letter-container">
         <button class="close-letter" id="closeLetterBtn" onclick="closeLetter(event)">Đóng thư</button>
@@ -470,7 +549,6 @@
 
     <audio id="bgMusic" src="audio/tungngayyeuem.mp3" type="audio/mp3" loop></audio>
   </div>
-
   <script>
     const CORRECT_PASS = "15072005";
     let isPasswordVisible = false;
