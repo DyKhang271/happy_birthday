@@ -325,6 +325,18 @@
       border: 3px dashed #fd83adbb; overflow: visible; transition: box-shadow 0.3s, transform 0.3s;
     }
     .cute-photo-frame:hover { transform: scale(1.05) rotate(-2deg); box-shadow: 0 10px 28px #fda3c749, 0 3px 12px #b2ebf2aa; }
+    
+    .cute-photo-frame.animate-once {
+      transform: scale(1.05) rotate(-2deg);
+      box-shadow: 0 10px 28px #fda3c749, 0 3px 12px #b2ebf2aa;
+    }
+
+    /* --- SỬA Ở ĐÂY: Thêm quy tắc này để sticker cũng có hiệu ứng --- */
+    .cute-photo-frame.animate-once .sticker {
+      transform: scale(1.1) translateY(-3px);
+      opacity: 1;
+    }
+
     .img-in-letter-cute {
       width: 98px; height: 98px; object-fit: cover; border-radius: 20px;
       border: 2.5px solid #fff9; box-shadow: 0 1.5px 8px #fda3c744;
@@ -477,14 +489,12 @@
         toggleEyeVisibility();
     }
 
-    // --- SỬA Ở ĐÂY: Hàm checkPass đã được cập nhật ---
     function checkPass() {
       if (passVal === CORRECT_PASS) {
         document.getElementById("lockScreen").classList.add("hidden");
         document.getElementById("mainScreen").classList.remove("hidden");
         launchConfetti();
         
-        // Tự động phát nhạc nền khi nhập đúng mật khẩu
         document.getElementById("bgMusic").play().catch(e => console.error("Lỗi tự động phát nhạc:", e));
 
       } else {
@@ -532,12 +542,27 @@
     const slideshowImages = ["img/img2.jpeg", "img/img3.jpeg", "img/img4.jpeg", "img/img5.jpeg"];
     let currentSlideIndex = 0;
     let slideInterval;
+
     function changeSlide() {
         const imgEl = document.getElementById("slideshowImage");
+        const frame = document.querySelector('.cute-photo-frame');
+
         currentSlideIndex = (currentSlideIndex + 1) % slideshowImages.length;
         imgEl.style.opacity = 0;
-        setTimeout(() => { imgEl.src = slideshowImages[currentSlideIndex]; imgEl.style.opacity = 1; }, 400);
+
+        if (frame) {
+            frame.classList.add('animate-once');
+            setTimeout(() => {
+                frame.classList.remove('animate-once');
+            }, 500);
+        }
+
+        setTimeout(() => {
+            imgEl.src = slideshowImages[currentSlideIndex];
+            imgEl.style.opacity = 1;
+        }, 400);
     }
+
     function startSlideshow() {
       currentSlideIndex = 0;
       document.getElementById("slideshowImage").src = slideshowImages[currentSlideIndex];
@@ -546,7 +571,6 @@
     function stopSlideshow() { clearInterval(slideInterval); }
 
     let isLetterOpen = false;
-    // --- SỬA Ở ĐÂY: Chức năng phát nhạc đã bị xóa khỏi nút này ---
     document.getElementById("openLetterBtn").addEventListener("click", function () {
       if (!isLetterOpen) {
         document.getElementById("letterInside").style.display = "block";
